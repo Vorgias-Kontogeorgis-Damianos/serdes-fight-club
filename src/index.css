@@ -398,14 +398,29 @@ h1, h2, h3, h4 {
     flex: 1;
     min-height: 400px;
     display: flex;
+    align-self: stretch;
     align-items: center;
     justify-content: center;
     background-color: var(--tertiary-bg);
 }
 
+.instructor-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .instructor-info {
     flex: 1;
     padding: 40px;
+}
+
+@media (max-width: 768px) {
+    .hero,
+    .schedule {
+        background-attachment: scroll !important;
+    }
 }
 
 /* Contact */

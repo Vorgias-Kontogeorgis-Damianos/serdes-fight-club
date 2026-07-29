@@ -10,19 +10,16 @@ function loadVideoSource(video) {
   return true;
 }
 
-function startVideo(video) {
-  const wasLoaded = loadVideoSource(video);
+function playMutedVideo(video) {
   const play = () => video.play().catch(() => {});
-  if (wasLoaded) video.addEventListener('canplay', play, { once: true });
-  else play();
+  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) play();
+  else video.addEventListener('canplay', play, { once: true });
 }
 
 function toggleVideo(video) {
   const wasLoaded = loadVideoSource(video);
   if (wasLoaded || video.paused) {
-    const play = () => video.play().catch(() => {});
-    if (wasLoaded) video.addEventListener('canplay', play, { once: true });
-    else play();
+    playMutedVideo(video);
   } else {
     video.pause();
   }
@@ -66,22 +63,43 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const videos = Array.from(document.querySelectorAll('video[data-lazy-video]'));
+    const programVideos = Array.from(document.querySelectorAll('video[data-lazy-video]'));
+    const reelVideos = Array.from(document.querySelectorAll('video[data-reel-video]'));
     if (!('IntersectionObserver' in window)) {
-      videos.forEach(loadVideoSource);
+      programVideos.forEach(loadVideoSource);
+      reelVideos.forEach((video) => {
+        loadVideoSource(video);
+        playMutedVideo(video);
+      });
       return undefined;
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    const programObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         loadVideoSource(entry.target);
-        observer.unobserve(entry.target);
+        programObserver.unobserve(entry.target);
       });
     }, { rootMargin: '0px' });
 
-    videos.forEach((video) => observer.observe(video));
-    return () => observer.disconnect();
+    const reelObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (!entry.isIntersecting) {
+          video.pause();
+          return;
+        }
+        loadVideoSource(video);
+        playMutedVideo(video);
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.15 });
+
+    programVideos.forEach((video) => programObserver.observe(video));
+    reelVideos.forEach((video) => reelObserver.observe(video));
+    return () => {
+      programObserver.disconnect();
+      reelObserver.disconnect();
+    };
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -109,7 +127,7 @@ function App() {
         </div>
       </nav>
 
-      <header id="home" className="hero" style={{ backgroundImage: "url('/bg-inside2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+      <header id="home" className="hero" style={{ backgroundImage: "url('/media/bg-inside2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <h1 className="hero-title">Unleash Your <span className="highlight">Potential</span></h1>
@@ -183,7 +201,7 @@ function App() {
         </div>
       </section>
 
-      <section id="schedule" className="schedule section-padding" style={{ backgroundImage: "url('/schedule-bg.png')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', position: 'relative' }}>
+      <section id="schedule" className="schedule section-padding" style={{ backgroundImage: "url('/media/schedule-bg.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', position: 'relative' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1 }}></div>
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="section-title">
@@ -288,7 +306,7 @@ function App() {
         <div className="container">
           <div className="instructor-layout">
             <div className="instructor-image">
-              <img src="/coach.png" alt="Coach Thodoris Serdes" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '400px' }} />
+              <img src="/media/coach.jpg" alt="Coach Thodoris Serdes" loading="eager" fetchPriority="high" decoding="async" />
             </div>
             <div className="instructor-info">
               <h2>Meet Your <span className="highlight">Head Coach</span></h2>
@@ -304,7 +322,7 @@ function App() {
 
           <div className="grid sub-instructors-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', marginTop: '40px' }}>
             <div className="card instructor-card" style={{ padding: '0', overflow: 'hidden', backgroundColor: 'var(--secondary-bg)', borderRadius: '8px' }}>
-              <img src="/coach-giannis.png" alt="Giannis Ludakis" loading="lazy" decoding="async" style={{ width: '100%', height: '350px', objectFit: 'cover', objectPosition: 'top' }} />
+              <img src="/media/coach-giannis.jpg" alt="Giannis Ludakis" loading="lazy" decoding="async" style={{ width: '100%', height: '350px', objectFit: 'cover', objectPosition: 'top' }} />
               <div style={{ padding: '25px' }}>
                 <h3 style={{ marginBottom: '5px' }}>Giannis Ludakis</h3>
                 <h4 style={{ color: 'var(--accent)', marginBottom: '15px', fontSize: '0.9rem' }}>BJJ Head Coach • Black Belt</h4>
@@ -314,7 +332,7 @@ function App() {
             </div>
             
             <div className="card instructor-card" style={{ padding: '0', overflow: 'hidden', backgroundColor: 'var(--secondary-bg)', borderRadius: '8px' }}>
-              <img src="/coach-emmanouela.png" alt="Emmanouela Fakoukaki" loading="lazy" decoding="async" style={{ width: '100%', height: '350px', objectFit: 'cover', objectPosition: 'top' }} />
+              <img src="/media/coach-emmanouela.jpg" alt="Emmanouela Fakoukaki" loading="lazy" decoding="async" style={{ width: '100%', height: '350px', objectFit: 'cover', objectPosition: 'top' }} />
               <div style={{ padding: '25px' }}>
                 <h3 style={{ marginBottom: '5px' }}>Emmanouela Fakoukaki</h3>
                 <h4 style={{ color: 'var(--accent)', marginBottom: '15px', fontSize: '0.9rem' }}>Boxing & Kickboxing • PT</h4>
@@ -342,9 +360,10 @@ function App() {
                    playsInline 
                    className="reel-video"
                    preload="none"
-                   data-interactive-video="true"
-                   onPointerEnter={(e) => startVideo(e.currentTarget)}
-                   onPointerLeave={(e) => e.currentTarget.pause()}
+                   autoPlay
+                   data-reel-video="true"
+                   onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                   onMouseLeave={(e) => e.currentTarget.pause()}
                    onClick={(e) => toggleVideo(e.currentTarget)}
                  >
                    <source data-src={`/videos/${vid}#t=1.5`} type="video/mp4" />
@@ -368,10 +387,10 @@ function App() {
               <p>Take a look at our fully-equipped, modern training facilities designed to accommodate every martial art and fitness goal.</p>
             </div>
             <div className="grid gallery-grid grid-2x2">
-              <img src="/school1.png" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/building-new4.png" alt="Gym Exterior Sign" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/building-new5.png" alt="Gym Interior Equipment" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/school4.png" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/school1.jpg" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/building-new4.jpg" alt="Gym Exterior Sign" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/building-new5.jpg" alt="Gym Interior Equipment" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/school4.jpg" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
             </div>
           </div>
 
@@ -381,10 +400,10 @@ function App() {
               <p>We frequently accommodate professional fighters looking for high-level training camps, as well as visiting amateurs and martial artists dropping in for 1-on-1 sessions or group classes.</p>
             </div>
             <div className="grid gallery-grid grid-2x2">
-              <img src="/gallery-jack1.png" alt="Pro Fighter Jack Grant Sparring" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/gallery-jack2.png" alt="Pro Fighter Jack Grant Training" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/gallery-jack3.png" alt="Pro Fighter Grappling" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/gallery-visitor.png" alt="Visiting Amateur Fighter" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-jack1.jpg" alt="Pro Fighter Jack Grant Sparring" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-jack2.jpg" alt="Pro Fighter Jack Grant Training" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-jack3.jpg" alt="Pro Fighter Grappling" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-visitor.jpg" alt="Visiting Amateur Fighter" className="gallery-img" loading="lazy" decoding="async" />
             </div>
           </div>
 
@@ -394,9 +413,9 @@ function App() {
               <p>We regularly host and attend world-class seminars with elite martial artists to continually expand our knowledge.</p>
             </div>
             <div className="grid gallery-grid">
-              <img src="/gallery-seminar.png" alt="BJJ Seminar Poster" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/gallery-seminar2.png" alt="UFC Seminar Event" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/gallery-seminar3.png" alt="MMA Seminar Banner" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-seminar.jpg" alt="BJJ Seminar Poster" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-seminar2.jpg" alt="UFC Seminar Event" className="gallery-img" loading="lazy" decoding="async" />
+              <img src="/media/gallery-seminar3.jpg" alt="MMA Seminar Banner" className="gallery-img" loading="lazy" decoding="async" />
             </div>
           </div>
 
@@ -406,15 +425,15 @@ function App() {
               <p>We maintain a strong, active presence in local and national competitions across Kickboxing, MMA, and BJJ.</p>
             </div>
             <div className="grid gallery-grid">
-               <img src="/comp1.jpg" alt="Fight Team in Ring" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp2.png" alt="Female Fighter Victory" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp3.png" alt="Medal Winner and Cage Action" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp4.png" alt="Fight Team Outside Cage" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp5.jpg" alt="Fight Team Group Shot" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp6.png" alt="Fight Team Crowd" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp8.png" alt="Fight Team Gym" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp10.png" alt="Fight Team Action" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/comp11.png" alt="Fight Team Competition" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp1.jpg" alt="Fight Team in Ring" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp2.jpg" alt="Female Fighter Victory" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp3.jpg" alt="Medal Winner and Cage Action" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp4.jpg" alt="Fight Team Outside Cage" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp5.jpg" alt="Fight Team Group Shot" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp6.jpg" alt="Fight Team Crowd" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp8.jpg" alt="Fight Team Gym" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp10.jpg" alt="Fight Team Action" className="gallery-img" loading="lazy" decoding="async" />
+               <img src="/media/comp11.jpg" alt="Fight Team Competition" className="gallery-img" loading="lazy" decoding="async" />
             </div>
           </div>
 
