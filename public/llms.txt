@@ -1,0 +1,14 @@
+# Serdes Fight Club
+
+Serdes Fight Club is a martial arts and fitness training gym in Heraklion, Crete. The club offers MMA, kickboxing, Muay Thai, Brazilian Jiu-Jitsu, Fit Box, Pilates, and kids' classes.
+
+## Official pages
+
+- [Homepage](https://serdesfightclub.gr/): training overview, programmes, coaches, schedule, and contact details.
+- [Sitemap](https://serdesfightclub.gr/sitemap.xml): list of public URLs.
+- [Robots policy](https://serdesfightclub.gr/robots.txt): crawler directives.
+
+## Contact
+
+- [Instagram](https://www.instagram.com/serdesfightclub/)
+- [Location and directions](https://www.google.com/maps/search/?api=1&query=Serdes+Fight+Club+Heraklion)
