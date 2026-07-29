@@ -115,6 +115,11 @@ function App() {
               <h3>Kids Muay Thai</h3>
               <p>Discipline, respect, and fitness. We teach kids self-defense in a safe, structured environment.</p>
             </div>
+            <div className="card program-card" style={{ backgroundImage: "url('/bg-kids.png')" }}>
+              <i className="fas fa-puzzle-piece fa-3x"></i>
+              <h3>Structured Kids Muay Thai</h3>
+              <p>Small-group, consistent and individualized training for children with developmental or learning difficulties, supporting confidence and each child&apos;s unique strengths.</p>
+            </div>
             <div className="card program-card">
               <video autoPlay loop muted playsInline className="card-video-bg">
                 <source src="/videos/fitbox-1.mp4" type="video/mp4" />
@@ -123,7 +128,7 @@ function App() {
               <h3>Fit Box</h3>
               <p>A high-cardio boxing workout. Sweat it out and get in fighting shape without the sparring.</p>
             </div>
-            <div className="card program-card" style={{ backgroundImage: "url('/bg-pilates.png')" }}>
+            <div className="card program-card pilates-card" style={{ backgroundImage: "url('/bg-pilates.png')" }}>
               <i className="fas fa-spa fa-3x"></i>
               <h3>Pilates</h3>
               <p>Build core strength, flexibility, and balance to prevent injuries and improve overall athletic performance.</p>
@@ -179,37 +184,32 @@ function App() {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BJJ<br />(GI & NO GI)</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BRAZILIAN<br />JIU-JITSU</td>
                   </tr>
                   <tr>
-                    <td className="time-col">16:00</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids510')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids510')}>KIDS MUAY<br />THAI 5-10</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids510')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids510')}>KIDS MUAY<br />THAI 5-10</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids510')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids510')}>KIDS MUAY<br />THAI 5-10</td>
-                    <td></td>
+                    <td className="time-col">11:00</td><td></td><td></td><td></td><td></td><td></td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('structuredKids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('structuredKids')}>STRUCTURED<br />KIDS MUAY THAI</td>
+                  </tr>
+                  <tr>
+                    <td className="time-col">16:00</td><td></td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('structuredKids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('structuredKids')}>STRUCTURED<br />KIDS MUAY THAI</td>
+                    <td></td><td></td><td></td><td></td>
                   </tr>
                   <tr>
                     <td className="time-col">17:00</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids1014')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids1014')}>KIDS MUAY<br />THAI 10-14</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids1014')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids1014')}>KIDS MUAY<br />THAI 10-14</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids1014')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids1014')}>KIDS MUAY<br />THAI 10-14</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids1014')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids1014')}>KIDS MUAY<br />THAI 10-14</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids1014')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids1014')}>KIDS MUAY<br />THAI 10-14</td>
-                    <td></td>
+                    <td></td><td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td><td></td><td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td><td></td><td></td>
                   </tr>
                   <tr>
                     <td className="time-col">18:00</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids')}>KIDS MUAY THAI</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids')}>KIDS MUAY THAI</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids')}>KIDS MUAY THAI</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids')}>KIDS MUAY THAI</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('kids')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kids')}>KIDS MUAY THAI</td>
                     <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
                   </tr>
                   <tr>
-                    <td className="time-col">19:30</td>
+                    <td className="time-col">19:00</td>
                     <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
                     <td className="class-filled" onMouseEnter={() => setHoveredArt('mma')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('mma')}>MMA</td>
                     <td className="class-filled" onMouseEnter={() => setHoveredArt('kick')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('kick')}>KICKBOXING<br />MUAY THAI</td>
@@ -219,21 +219,17 @@ function App() {
                   </tr>
                   <tr>
                     <td className="time-col">20:30</td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BJJ<br />(NO GI)</td>
-                    <td></td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BJJ<br />(GI & NO GI)</td>
-                    <td></td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BJJ<br />(NO GI)</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BRAZILIAN<br />JIU-JITSU</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BRAZILIAN<br />JIU-JITSU</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
+                    <td className="class-filled" onMouseEnter={() => setHoveredArt('bjj')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('bjj')}>BRAZILIAN<br />JIU-JITSU</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td className="time-col">21:00</td>
                     <td></td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
-                    <td></td>
-                    <td className="class-filled" onMouseEnter={() => setHoveredArt('fitbox')} onMouseLeave={() => setHoveredArt(null)} style={getArtStyle('fitbox')}>FIT BOX</td>
-                    <td></td>
-                    <td></td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td>
                   </tr>
                 </tbody>
               </table>
@@ -251,7 +247,7 @@ function App() {
             <div className="instructor-info">
               <h2>Meet Your <span className="highlight">Head Coach</span></h2>
               <h3>Thodoris Serdes</h3>
-              <p>Thodoris Serdes is an active professional MMA fighter representing Greece on the European stage. Having competed in major promotions like Cage Warriors, MMA Quest, and Cage Survivor, he brings real cage experience to the mats every single day.</p>
+              <p>Thodoris Serdes is an active Greek professional MMA fighter who has competed in Cage Warriors, Quest MMA, and Cage Survivor, bringing first-hand competition experience to his coaching.</p>
               <a href="https://www.instagram.com/serdes_mma/?hl=el" target="_blank" rel="noreferrer" className="btn btn-primary" style={{marginTop: '15px', marginBottom: '15px'}}>Follow on Instagram</a>
               <div style={{ marginTop: '10px', padding: '15px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '8px', borderLeft: '4px solid var(--accent)' }}>
                 <h4 style={{ marginBottom: '5px', color: 'var(--text-main)' }}>An Elite Coaching Team</h4>
@@ -292,7 +288,7 @@ function App() {
           </div>
           
           <div className="reels-container" style={{ padding: '0 20px' }}>
-            {['bjj-4.mp4', 'kick-5.mp4', 'mma-2.mp4', 'kick-1.mp4', 'bjj-1.mp4', 'mma-1.mp4', 'kick-2.mp4', 'kids-1.mp4', 'kick-3.mp4', 'bjj-2.mp4', 'fitbox-1.mp4', 'kick-4.mp4', 'kids-2.mp4', 'bjj-3.mp4', 'kick-6.mp4', 'mma-3.mp4', 'kick-7.mp4', 'kick-8.mp4', 'kick-9.mp4'].map(vid => (
+            {['bjj-4.mp4', 'kick-5.mp4', 'mma-2.mp4', 'kick-1.mp4', 'bjj-1.mp4', 'mma-1.mp4', 'kick-2.mp4', 'kick-3.mp4', 'bjj-2.mp4', 'fitbox-1.mp4', 'kick-4.mp4', 'bjj-3.mp4', 'kick-6.mp4', 'mma-3.mp4', 'kick-7.mp4', 'kick-8.mp4', 'kick-9.mp4'].map(vid => (
                <div key={vid} className="reel-card">
                  <video 
                    loop 
