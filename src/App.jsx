@@ -38,6 +38,33 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const videos = Array.from(document.querySelectorAll('video[data-lazy-video]'));
+    const loadVideo = (video) => {
+      const source = video.querySelector('source[data-src]');
+      if (!source) return;
+      source.src = source.dataset.src;
+      source.removeAttribute('data-src');
+      video.load();
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(loadVideo);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        loadVideo(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '250px 0px' });
+
+    videos.forEach((video) => observer.observe(video));
+    return () => observer.disconnect();
+  }, []);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -84,32 +111,32 @@ function App() {
           </div>
           <div className="grid programs-grid">
             <div className="card program-card">
-              <video autoPlay loop muted playsInline className="card-video-bg">
-                <source src="/videos/mma-1.mp4" type="video/mp4" />
+              <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
+                <source data-src="/videos/mma-1.mp4" type="video/mp4" />
               </video>
               <i className="fas fa-fist-raised fa-3x"></i>
               <h3>MMA</h3>
               <p>Train in all disciplines. Combining striking and grappling for the ultimate cage readiness.</p>
             </div>
             <div className="card program-card">
-              <video autoPlay loop muted playsInline className="card-video-bg">
-                <source src="/videos/kick-9.mp4" type="video/mp4" />
+              <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
+                <source data-src="/videos/kick-9.mp4" type="video/mp4" />
               </video>
               <i className="fas fa-fire fa-3x"></i>
               <h3>Kickboxing / Muay Thai</h3>
               <p>Learn to strike with power and precision. Pad work, hard sparring, and heavy bags.</p>
             </div>
             <div className="card program-card">
-              <video autoPlay loop muted playsInline className="card-video-bg">
-                <source src="/videos/bjj-1.mp4" type="video/mp4" />
+              <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
+                <source data-src="/videos/bjj-1.mp4" type="video/mp4" />
               </video>
               <i className="fas fa-user-ninja fa-3x"></i>
               <h3>Brazilian Jiu Jitsu</h3>
               <p>The art of submission. Learn sweeps, chokes, and joint locks from expert black belts. We train both <strong>Gi and No Gi</strong>.</p>
             </div>
             <div className="card program-card">
-              <video autoPlay loop muted playsInline className="card-video-bg">
-                <source src="/videos/kids-1.mp4" type="video/mp4" />
+              <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
+                <source data-src="/videos/kids-1.mp4" type="video/mp4" />
               </video>
               <i className="fas fa-child fa-3x"></i>
               <h3>Kids Muay Thai</h3>
@@ -121,8 +148,8 @@ function App() {
               <p>Small-group, consistent and individualized training for children with developmental or learning difficulties, supporting confidence and each child&apos;s unique strengths.</p>
             </div>
             <div className="card program-card">
-              <video autoPlay loop muted playsInline className="card-video-bg">
-                <source src="/videos/fitbox-1.mp4" type="video/mp4" />
+              <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
+                <source data-src="/videos/fitbox-1.mp4" type="video/mp4" />
               </video>
               <i className="fas fa-dumbbell fa-3x"></i>
               <h3>Fit Box</h3>
@@ -295,12 +322,13 @@ function App() {
                    muted 
                    playsInline 
                    className="reel-video"
-                   preload="metadata"
+                   preload="none"
+                   data-lazy-video="true"
                    onMouseEnter={(e) => e.target.play()}
                    onMouseLeave={(e) => e.target.pause()}
                    onClick={(e) => e.target.paused ? e.target.play() : e.target.pause()}
                  >
-                   <source src={`/videos/${vid}#t=1.5`} type="video/mp4" />
+                   <source data-src={`/videos/${vid}#t=1.5`} type="video/mp4" />
                  </video>
                </div>
             ))}
