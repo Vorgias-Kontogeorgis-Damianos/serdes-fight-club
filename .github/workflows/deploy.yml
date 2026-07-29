@@ -1,0 +1,52 @@
+name: Deploy Serdes Fight Club
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-serdes-fight-club
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Build production site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 92.5.155.0 >> ~/.ssh/known_hosts
+
+      - name: Publish static site
+        run: |
+          rsync -az --delete ./dist/ ubuntu@92.5.155.0:/tmp/serdes-fight-club/
+          ssh ubuntu@92.5.155.0 '
+            sudo mkdir -p /var/www/serdes-fight-club &&
+            sudo rsync -a --delete /tmp/serdes-fight-club/ /var/www/serdes-fight-club/ &&
+            sudo chown -R www-data:www-data /var/www/serdes-fight-club &&
+            sudo nginx -t &&
+            sudo systemctl reload nginx
+          '
+
+      - name: Verify public site
+        run: curl --fail --retry 5 --retry-delay 3 -H 'Host: serdesfightclub.gr' http://92.5.155.0/
