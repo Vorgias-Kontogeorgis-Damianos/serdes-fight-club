@@ -282,9 +282,41 @@ h1, h2, h3, h4 {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.card i {
+.structured-kids-card::before {
+    background-color: rgba(0, 0, 0, 0.48);
+    z-index: 1;
+}
+
+.structured-kids-card {
+    background-image: none !important;
+}
+
+.structured-kids-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.structured-kids-card > :not(.structured-kids-image) {
+    position: relative;
+    z-index: 2;
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    vertical-align: -0.125em;
+}
+
+.card .program-icon {
     color: var(--text-main);
     margin-bottom: 20px;
+    font-size: 3rem;
 }
 
 .card h3 {
@@ -352,7 +384,7 @@ h1, h2, h3, h4 {
     font-size: 0.95rem;
 }
 
-.pricing-features i {
+.pricing-features .icon {
     margin-right: 10px;
     color: var(--accent);
     font-size: 0.9rem;
@@ -456,7 +488,7 @@ h1, h2, h3, h4 {
     margin-bottom: 30px;
 }
 
-.contact-item i {
+.contact-item .icon {
     font-size: 1.5rem;
     color: var(--text-muted);
     margin-top: 5px;
@@ -539,6 +571,16 @@ footer {
     overflow-y: hidden;
     padding-bottom: 20px;
     -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    user-select: none;
+}
+
+.reels-container.is-dragging {
+    cursor: grabbing;
+}
+
+.reels-container.is-dragging .reel-card {
+    pointer-events: none;
 }
 
 /* Sleek custom scrollbar for desktop */

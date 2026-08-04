@@ -1,5 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './index.css';
+import Icon from './Icon.jsx';
+
+const NAVIGATION = [
+  ['home', 'Home'], ['programs', 'Programs'], ['schedule', 'Schedule'],
+  ['instructors', 'Instructors'], ['pricing', 'Pricing'], ['faq', 'FAQ'], ['contact', 'Contact'],
+];
+
+const REEL_VIDEOS = [
+  'bjj-4.mp4', 'kick-5.mp4', 'mma-2.mp4', 'kick-1.mp4', 'bjj-1.mp4', 'mma-1.mp4',
+  'kick-2.mp4', 'kick-3.mp4', 'bjj-2.mp4', 'fitbox-1.mp4', 'kick-4.mp4', 'bjj-3.mp4',
+  'kick-6.mp4', 'mma-3.mp4', 'kick-7.mp4', 'kick-8.mp4', 'kick-9.mp4',
+];
+
+const GALLERY_SECTIONS = [
+  {
+    title: 'Inside the Club',
+    description: 'Take a look inside our fully-equipped, modern training facilities designed to accommodate every martial art and fitness goal.',
+    className: 'grid-2x2',
+    images: [
+      ['school1.jpg', 'School Facility'], ['building-new4.jpg', 'Gym Exterior Sign'],
+      ['building-new5.jpg', 'Gym Interior Equipment'], ['school4.jpg', 'School Facility'],
+    ],
+  },
+  {
+    title: 'Pros & Visitors',
+    description: 'We frequently accommodate professional fighters looking for high-level training camps, as well as visiting amateurs and martial artists dropping in for 1-on-1 sessions or group classes.',
+    className: 'grid-2x2',
+    images: [
+      ['gallery-jack1.jpg', 'Pro Fighter Jack Grant Sparring'], ['gallery-jack2.jpg', 'Pro Fighter Jack Grant Training'],
+      ['gallery-jack3.jpg', 'Pro Fighter Grappling'], ['gallery-visitor.jpg', 'Visiting Amateur Fighter'],
+    ],
+  },
+  {
+    title: 'Seminars & Special Events',
+    description: 'We regularly host and attend world-class seminars with elite martial artists to continually expand our knowledge.',
+    images: [
+      ['gallery-seminar.jpg', 'BJJ Seminar Poster'], ['gallery-seminar2.jpg', 'UFC Seminar Event'], ['gallery-seminar3.jpg', 'MMA Seminar Banner'],
+    ],
+  },
+  {
+    title: 'Our Fight Team',
+    description: 'We maintain a strong, active presence in local and national competitions across Kickboxing, MMA, and BJJ.',
+    images: [
+      ['comp1.jpg', 'Fight Team in Ring'], ['comp2.jpg', 'Female Fighter Victory'], ['comp3.jpg', 'Medal Winner and Cage Action'],
+      ['comp4.jpg', 'Fight Team Outside Cage'], ['comp5.jpg', 'Fight Team Group Shot'], ['comp6.jpg', 'Fight Team Crowd'],
+      ['comp8.jpg', 'Fight Team Gym'], ['comp10.jpg', 'Fight Team Action'], ['comp11.jpg', 'Fight Team Competition'],
+    ],
+  },
+];
 
 function loadVideoSource(video) {
   const source = video.querySelector('source[data-src]');
@@ -30,6 +79,38 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState('up');
   const [hoveredArt, setHoveredArt] = useState(null);
+  const reelDrag = useRef({ active: false, moved: false, startX: 0, scrollLeft: 0 });
+
+  const startReelDrag = (event) => {
+    if (event.pointerType !== 'mouse') return;
+    const rail = event.currentTarget;
+    reelDrag.current = { active: true, moved: false, startX: event.clientX, scrollLeft: rail.scrollLeft };
+    rail.setPointerCapture(event.pointerId);
+    rail.classList.add('is-dragging');
+  };
+
+  const moveReelDrag = (event) => {
+    const state = reelDrag.current;
+    if (!state.active) return;
+    const distance = event.clientX - state.startX;
+    if (Math.abs(distance) > 4) state.moved = true;
+    event.currentTarget.scrollLeft = state.scrollLeft - distance;
+  };
+
+  const endReelDrag = (event) => {
+    if (!reelDrag.current.active) return;
+    reelDrag.current.active = false;
+    event.currentTarget.classList.remove('is-dragging');
+  };
+
+  const handleReelClick = (event) => {
+    if (reelDrag.current.moved) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    toggleVideo(event.currentTarget);
+  };
 
   const getArtStyle = (artName) => ({
     opacity: hoveredArt ? (hoveredArt === artName ? 1 : 0.3) : 1,
@@ -113,21 +194,17 @@ function App() {
             <img src="/logo-transparent.png" alt="Serdes Fight Club" style={{ height: '60px' }} />
           </div>
           <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-            <li><a href="#home" onClick={closeMenu}>Home</a></li>
-            <li><a href="#programs" onClick={closeMenu}>Programs</a></li>
-            <li><a href="#schedule" onClick={closeMenu}>Schedule</a></li>
-            <li><a href="#instructors" onClick={closeMenu}>Instructors</a></li>
-            <li><a href="#pricing" onClick={closeMenu}>Pricing</a></li>
-            <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
-            <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
+            {NAVIGATION.map(([id, label]) => (
+              <li key={id}><a href={`#${id}`} onClick={closeMenu}>{label}</a></li>
+            ))}
           </ul>
           <div className="hamburger" onClick={toggleMenu}>
-            <i className="fas fa-bars"></i>
+            <Icon name="menu" />
           </div>
         </div>
       </nav>
 
-      <header id="home" className="hero" style={{ backgroundImage: "url('/media/bg-inside2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+      <header id="home" className="hero" style={{ backgroundImage: "url('/media/bg-inside2.webp')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <h1 className="hero-title">Unleash Your <span className="highlight">Potential</span></h1>
@@ -151,7 +228,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/mma-1.mp4" type="video/mp4" />
               </video>
-              <i className="fas fa-fist-raised fa-3x"></i>
+              <Icon name="fist" className="program-icon" />
               <h3>MMA</h3>
               <p>Train in all disciplines. Combining striking and grappling for the ultimate cage readiness.</p>
             </div>
@@ -159,7 +236,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/kick-9.mp4" type="video/mp4" />
               </video>
-              <i className="fas fa-fire fa-3x"></i>
+              <Icon name="fire" className="program-icon" />
               <h3>Kickboxing / Muay Thai</h3>
               <p>Learn to strike with power and precision. Pad work, hard sparring, and heavy bags.</p>
             </div>
@@ -167,7 +244,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/bjj-1.mp4" type="video/mp4" />
               </video>
-              <i className="fas fa-user-ninja fa-3x"></i>
+              <Icon name="ninja" className="program-icon" />
               <h3>Brazilian Jiu Jitsu</h3>
               <p>The art of submission. Learn sweeps, chokes, and joint locks from expert black belts. We train both <strong>Gi and No Gi</strong>.</p>
             </div>
@@ -175,12 +252,13 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/kids-1.mp4" type="video/mp4" />
               </video>
-              <i className="fas fa-child fa-3x"></i>
+              <Icon name="child" className="program-icon" />
               <h3>Kids Muay Thai</h3>
               <p>Discipline, respect, and fitness. We teach kids self-defense in a safe, structured environment.</p>
             </div>
-            <div className="card program-card" style={{ backgroundImage: "url('/bg-kids.png')" }}>
-              <i className="fas fa-puzzle-piece fa-3x"></i>
+            <div className="card program-card structured-kids-card">
+              <img className="structured-kids-image" src="/bg-kids.png" alt="" aria-hidden="true" decoding="async" />
+              <Icon name="puzzle" className="program-icon" />
               <h3>Structured Kids Muay Thai</h3>
               <p>Small-group, consistent and individualized training for children with developmental or learning difficulties, supporting confidence and each child&apos;s unique strengths.</p>
             </div>
@@ -188,12 +266,12 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/fitbox-1.mp4" type="video/mp4" />
               </video>
-              <i className="fas fa-dumbbell fa-3x"></i>
+              <Icon name="dumbbell" className="program-icon" />
               <h3>Fit Box</h3>
               <p>A high-cardio boxing workout. Sweat it out and get in fighting shape without the sparring.</p>
             </div>
             <div className="card program-card pilates-card" style={{ backgroundImage: "url('/bg-pilates.png')" }}>
-              <i className="fas fa-spa fa-3x"></i>
+              <Icon name="spa" className="program-icon" />
               <h3>Pilates</h3>
               <p>Build core strength, flexibility, and balance to prevent injuries and improve overall athletic performance.</p>
             </div>
@@ -201,7 +279,7 @@ function App() {
         </div>
       </section>
 
-      <section id="schedule" className="schedule section-padding" style={{ backgroundImage: "url('/media/schedule-bg.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', position: 'relative' }}>
+      <section id="schedule" className="schedule section-padding" style={{ backgroundImage: "url('/media/schedule-bg.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1 }}></div>
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="section-title">
@@ -327,7 +405,7 @@ function App() {
                 <h3 style={{ marginBottom: '5px' }}>Giannis Ludakis</h3>
                 <h4 style={{ color: 'var(--accent)', marginBottom: '15px', fontSize: '0.9rem' }}>BJJ Head Coach • Black Belt</h4>
                 <p style={{ fontSize: '0.95rem', marginBottom: '15px' }}>A respected black belt with a strong presence in national competitions.</p>
-                <a href="https://www.instagram.com/ludakisg/?hl=el" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}><i className="fab fa-instagram"></i> @ludakisg</a>
+                <a href="https://www.instagram.com/ludakisg/?hl=el" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}><Icon name="instagram" /> @ludakisg</a>
               </div>
             </div>
             
@@ -337,7 +415,7 @@ function App() {
                 <h3 style={{ marginBottom: '5px' }}>Emmanouela Fakoukaki</h3>
                 <h4 style={{ color: 'var(--accent)', marginBottom: '15px', fontSize: '0.9rem' }}>Boxing & Kickboxing • PT</h4>
                 <p style={{ fontSize: '0.95rem', marginBottom: '15px' }}>Certified fitness and personal trainer, specializing in high-energy boxing and kickboxing instruction.</p>
-                <a href="https://www.instagram.com/emmanouela_fakoukaki_/?hl=el" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}><i className="fab fa-instagram"></i> @emmanouela_fakoukaki_</a>
+                <a href="https://www.instagram.com/emmanouela_fakoukaki_/?hl=el" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}><Icon name="instagram" /> @emmanouela_fakoukaki_</a>
               </div>
             </div>
           </div>
@@ -351,8 +429,8 @@ function App() {
             <p>Raw footage straight from the mats.</p>
           </div>
           
-          <div className="reels-container" style={{ padding: '0 20px' }}>
-            {['bjj-4.mp4', 'kick-5.mp4', 'mma-2.mp4', 'kick-1.mp4', 'bjj-1.mp4', 'mma-1.mp4', 'kick-2.mp4', 'kick-3.mp4', 'bjj-2.mp4', 'fitbox-1.mp4', 'kick-4.mp4', 'bjj-3.mp4', 'kick-6.mp4', 'mma-3.mp4', 'kick-7.mp4', 'kick-8.mp4', 'kick-9.mp4'].map(vid => (
+          <div className="reels-container" style={{ padding: '0 20px' }} onPointerDown={startReelDrag} onPointerMove={moveReelDrag} onPointerUp={endReelDrag} onPointerCancel={endReelDrag}>
+            {REEL_VIDEOS.map((vid) => (
                <div key={vid} className="reel-card">
                  <video 
                    loop 
@@ -364,7 +442,7 @@ function App() {
                    data-reel-video="true"
                    onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
                    onMouseLeave={(e) => e.currentTarget.pause()}
-                   onClick={(e) => toggleVideo(e.currentTarget)}
+                   onClick={handleReelClick}
                  >
                    <source data-src={`/videos/${vid}#t=1.5`} type="video/mp4" />
                  </video>
@@ -381,61 +459,19 @@ function App() {
             <p>Take a look inside Serdes Fight Club.</p>
           </div>
           
-          <div className="gallery-category">
-            <div className="category-header">
-              <h3>Inside the Club</h3>
-              <p>Take a look at our fully-equipped, modern training facilities designed to accommodate every martial art and fitness goal.</p>
-            </div>
-            <div className="grid gallery-grid grid-2x2">
-              <img src="/media/school1.jpg" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/building-new4.jpg" alt="Gym Exterior Sign" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/building-new5.jpg" alt="Gym Interior Equipment" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/school4.jpg" alt="School Facility" className="gallery-img" loading="lazy" decoding="async" />
-            </div>
-          </div>
-
-          <div className="gallery-category">
-            <div className="category-header">
-              <h3>Pros & Visitors</h3>
-              <p>We frequently accommodate professional fighters looking for high-level training camps, as well as visiting amateurs and martial artists dropping in for 1-on-1 sessions or group classes.</p>
-            </div>
-            <div className="grid gallery-grid grid-2x2">
-              <img src="/media/gallery-jack1.jpg" alt="Pro Fighter Jack Grant Sparring" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/gallery-jack2.jpg" alt="Pro Fighter Jack Grant Training" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/gallery-jack3.jpg" alt="Pro Fighter Grappling" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/gallery-visitor.jpg" alt="Visiting Amateur Fighter" className="gallery-img" loading="lazy" decoding="async" />
-            </div>
-          </div>
-
-          <div className="gallery-category">
-            <div className="category-header">
-              <h3>Seminars & Special Events</h3>
-              <p>We regularly host and attend world-class seminars with elite martial artists to continually expand our knowledge.</p>
-            </div>
-            <div className="grid gallery-grid">
-              <img src="/media/gallery-seminar.jpg" alt="BJJ Seminar Poster" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/gallery-seminar2.jpg" alt="UFC Seminar Event" className="gallery-img" loading="lazy" decoding="async" />
-              <img src="/media/gallery-seminar3.jpg" alt="MMA Seminar Banner" className="gallery-img" loading="lazy" decoding="async" />
-            </div>
-          </div>
-
-          <div className="gallery-category">
-            <div className="category-header">
-              <h3>Our Fight Team</h3>
-              <p>We maintain a strong, active presence in local and national competitions across Kickboxing, MMA, and BJJ.</p>
-            </div>
-            <div className="grid gallery-grid">
-               <img src="/media/comp1.jpg" alt="Fight Team in Ring" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp2.jpg" alt="Female Fighter Victory" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp3.jpg" alt="Medal Winner and Cage Action" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp4.jpg" alt="Fight Team Outside Cage" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp5.jpg" alt="Fight Team Group Shot" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp6.jpg" alt="Fight Team Crowd" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp8.jpg" alt="Fight Team Gym" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp10.jpg" alt="Fight Team Action" className="gallery-img" loading="lazy" decoding="async" />
-               <img src="/media/comp11.jpg" alt="Fight Team Competition" className="gallery-img" loading="lazy" decoding="async" />
-            </div>
-          </div>
+          {GALLERY_SECTIONS.map(({ title, description, className = '', images }) => (
+            <section className="gallery-category" key={title}>
+              <div className="category-header">
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+              <div className={`grid gallery-grid ${className}`}>
+                {images.map(([fileName, alt]) => (
+                  <img key={fileName} src={`/media/${fileName}`} alt={alt} className="gallery-img" loading={title === 'Seminars & Special Events' || title === 'Our Fight Team' ? 'eager' : 'lazy'} fetchPriority="low" decoding="async" />
+                ))}
+              </div>
+            </section>
+          ))}
 
         </div>
       </section>
@@ -447,17 +483,17 @@ function App() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginTop: '10px', fontSize: '1.2rem' }}>
               <span style={{ color: 'var(--text-muted)' }}>Google Maps Rating 5 Stars</span>
               <div>
-                <i className="fas fa-star" style={{ color: 'var(--accent)' }}></i>
-                <i className="fas fa-star" style={{ color: 'var(--accent)' }}></i>
-                <i className="fas fa-star" style={{ color: 'var(--accent)' }}></i>
-                <i className="fas fa-star" style={{ color: 'var(--accent)' }}></i>
-                <i className="fas fa-star" style={{ color: 'var(--accent)' }}></i>
+                <Icon name="star" style={{ color: 'var(--accent)' }} />
+                <Icon name="star" style={{ color: 'var(--accent)' }} />
+                <Icon name="star" style={{ color: 'var(--accent)' }} />
+                <Icon name="star" style={{ color: 'var(--accent)' }} />
+                <Icon name="star" style={{ color: 'var(--accent)' }} />
               </div>
             </div>
           </div>
           <div className="grid reviews-grid">
             <div className="card review-card" style={{ padding: '25px', backgroundColor: 'var(--secondary-bg)', borderRadius: '8px', borderLeft: '4px solid var(--accent)' }}>
-              <p style={{ fontStyle: 'italic', marginBottom: '15px', fontSize: '0.95rem' }}>"Great training, gym's brilliant I’ll visit again for sure ✊🏼❤️"</p>
+              <p style={{ fontStyle: 'italic', marginBottom: '15px', fontSize: '0.95rem' }}>{'"Great training, gym\'s brilliant I\'ll visit again for sure \u{1F44A}\u{1F3FC}\u2764\uFE0F"'}</p>
               <h4 style={{ color: 'var(--text-main)', fontSize: '1rem' }}>- Jack Grant MMA</h4>
             </div>
 
@@ -490,18 +526,18 @@ function App() {
               <h3>Striking Base</h3>
               <div className="price">€45<span>/mo</span></div>
               <ul className="pricing-features">
-                <li><i className="fas fa-check"></i> Unlimited Kickboxing / Muay Thai</li>
-                <li><i className="fas fa-plus highlight"></i> Bonus: Fit Box classes</li>
-                <li><i className="fas fa-plus highlight"></i> Bonus: MMA classes</li>
+                <li><Icon name="check" /> Unlimited Kickboxing / Muay Thai</li>
+                <li><Icon name="plus" className="highlight" /> Bonus: Fit Box classes</li>
+                <li><Icon name="plus" className="highlight" /> Bonus: MMA classes</li>
               </ul>
             </div>
             <div className="card pricing-card">
               <h3>Grappling Base</h3>
               <div className="price">€45<span>/mo</span></div>
               <ul className="pricing-features">
-                <li><i className="fas fa-check"></i> Unlimited BJJ (Gi & No Gi)</li>
-                <li><i className="fas fa-plus highlight"></i> Bonus: Fit Box classes</li>
-                <li><i className="fas fa-plus highlight"></i> Bonus: MMA classes</li>
+                <li><Icon name="check" /> Unlimited BJJ (Gi & No Gi)</li>
+                <li><Icon name="plus" className="highlight" /> Bonus: Fit Box classes</li>
+                <li><Icon name="plus" className="highlight" /> Bonus: MMA classes</li>
               </ul>
             </div>
             <div className="card pricing-card featured">
@@ -509,20 +545,20 @@ function App() {
               <h3>Ultimate Package</h3>
               <div className="price">€60<span>/mo</span></div>
               <ul className="pricing-features">
-                <li><i className="fas fa-check"></i> Unlimited access to ALL classes</li>
-                <li><i className="fas fa-check"></i> Kickboxing & Muay Thai</li>
-                <li><i className="fas fa-check"></i> BJJ (Gi & No Gi)</li>
-                <li><i className="fas fa-check"></i> MMA & Fit Box</li>
-                <li><i className="fas fa-check"></i> Pilates</li>
+                <li><Icon name="check" /> Unlimited access to ALL classes</li>
+                <li><Icon name="check" /> Kickboxing & Muay Thai</li>
+                <li><Icon name="check" /> BJJ (Gi & No Gi)</li>
+                <li><Icon name="check" /> MMA & Fit Box</li>
+                <li><Icon name="check" /> Pilates</li>
               </ul>
             </div>
             <div className="card pricing-card">
               <h3>Kids Package</h3>
               <div className="price">€40<span>/mo</span></div>
               <ul className="pricing-features">
-                <li><i className="fas fa-check"></i> Specialized Kids Classes (5-14 yrs)</li>
-                <li><i className="fas fa-check"></i> Safe & structured environment</li>
-                <li><i className="fas fa-check"></i> Builds discipline & confidence</li>
+                <li><Icon name="check" /> Specialized Kids Classes (5-14 yrs)</li>
+                <li><Icon name="check" /> Safe & structured environment</li>
+                <li><Icon name="check" /> Builds discipline & confidence</li>
               </ul>
             </div>
           </div>
@@ -575,28 +611,28 @@ function App() {
           <div className="grid contact-grid">
             <div className="contact-info">
               <div className="contact-item">
-                <i className="fas fa-map-marker-alt"></i>
+                <Icon name="map" />
                 <div>
                   <h4>Address</h4>
                   <p>ΕΟΚ 26, Ηράκλειο 713 05</p>
                 </div>
               </div>
               <div className="contact-item">
-                <i className="fas fa-phone"></i>
+                <Icon name="phone" />
                 <div>
                   <h4>Phone</h4>
                   <p><a href="tel:+306957405110" style={{color: 'var(--text-muted)'}}>695 740 5110</a></p>
                 </div>
               </div>
               <div className="contact-item">
-                <i className="fab fa-instagram"></i>
+                <Icon name="instagram" />
                 <div>
                   <h4>Instagram</h4>
                   <p><a href="https://www.instagram.com/serdesfightclub/?hl=el" target="_blank" rel="noreferrer" style={{color: 'var(--text-muted)'}}>@serdesfightclub</a></p>
                 </div>
               </div>
               <div className="contact-item">
-                <i className="fab fa-tiktok"></i>
+                <Icon name="tiktok" />
                 <div>
                   <h4>TikTok</h4>
                   <p><a href="https://www.tiktok.com/@serdesfightclubofficial" target="_blank" rel="noreferrer" style={{color: 'var(--text-muted)'}}>@serdesfightclubofficial</a></p>
@@ -625,10 +661,10 @@ function App() {
           </div>
           <div className="social-links" style={{ display: 'flex', gap: '20px', fontSize: '1.5rem', marginBottom: '10px' }}>
             <a href="https://www.instagram.com/serdesfightclub/?hl=el" target="_blank" rel="noreferrer">
-              <i className="fab fa-instagram"></i>
+              <Icon name="instagram" />
             </a>
             <a href="https://www.tiktok.com/@serdesfightclubofficial" target="_blank" rel="noreferrer">
-              <i className="fab fa-tiktok"></i>
+              <Icon name="tiktok" />
             </a>
           </div>
           <p>&copy; 2026 Serdes Fight Club. All rights reserved.</p>
