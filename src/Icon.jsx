@@ -10,5 +10,5 @@ export default function Icon({ name, className = '', style }) {
   if (name === 'tiktok') {
     return <svg className={`icon icon-${name} ${className}`} style={style} viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M14 3v10.1a4.8 4.8 0 1 1-3.3-4.57v2.65a2.25 2.25 0 1 0 1.1 1.93V3h2.2c.5 2.2 1.8 3.55 4 3.95v2.23A8.1 8.1 0 0 1 14 7.85V3Z" /></svg>;
   }
-  return <span className={`icon icon-${name} ${className}`} style={style} aria-hidden="true">{glyphs[name] || '•'}</span>;
+  return <span className={`icon icon-${name} ${className}`} style={style} aria-hidden="true">{glyphs[name] || '\u2022'}</span>;
 }

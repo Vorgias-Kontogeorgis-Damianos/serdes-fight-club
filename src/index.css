@@ -27,6 +27,7 @@ body {
     background-attachment: fixed;
     color: var(--text-main);
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 a {
@@ -108,6 +109,35 @@ h1, h2, h3, h4 {
     background-color: transparent;
     color: var(--text-main);
     border-color: var(--text-main);
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-trial {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+@media (hover: hover) {
+    .btn-trial:hover {
+        background-color: var(--accent-hover);
+        border-color: var(--accent-hover);
+    }
+}
+
+@media (hover: none) {
+    .btn-primary:hover {
+        background-color: var(--text-main);
+        color: var(--primary-bg);
+        border-color: transparent;
+    }
 }
 
 /* Navigation */
@@ -229,6 +259,10 @@ h1, h2, h3, h4 {
 .grid {
     display: grid;
     gap: 30px;
+}
+
+.grid > * {
+    min-width: 0;
 }
 
 .programs-grid {
@@ -533,9 +567,16 @@ footer {
 /* Schedule Table */
 .table-responsive {
     overflow-x: auto;
+    touch-action: pan-x pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
     border-radius: 8px;
     background: rgba(0, 0, 0, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-responsive::-webkit-scrollbar {
+    display: none;
 }
 
 .schedule-table {
@@ -573,6 +614,9 @@ footer {
     -webkit-overflow-scrolling: touch;
     cursor: grab;
     user-select: none;
+    touch-action: pan-x pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
 }
 
 .reels-container.is-dragging {
@@ -585,7 +629,7 @@ footer {
 
 /* Sleek custom scrollbar for desktop */
 .reels-container::-webkit-scrollbar {
-    height: 8px;
+    display: none;
 }
 
 .reels-container::-webkit-scrollbar-track {
@@ -702,8 +746,34 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .grid-2x2 {
-        grid-template-columns: 1fr;
+    .gallery-grid,
+    .gallery-grid.grid-2x2 {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: min(82vw, 320px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 0;
+        touch-action: pan-x pan-y pinch-zoom;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+    }
+
+    .gallery-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gallery-grid .gallery-img {
+        scroll-snap-align: start;
+    }
+
+    .gallery-grid .gallery-img:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--tertiary-bg);
     }
 }
 
@@ -760,6 +830,18 @@ footer {
 
     .hero-title {
         font-size: 2.5rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .hero-actions .btn {
+        margin: 0;
+        min-width: 220px;
+        text-align: center;
     }
 
     .instructor-layout {

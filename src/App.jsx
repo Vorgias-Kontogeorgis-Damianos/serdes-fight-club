@@ -204,14 +204,14 @@ function App() {
         </div>
       </nav>
 
-      <header id="home" className="hero" style={{ backgroundImage: "url('/media/bg-inside2.webp')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <header id="home" className="hero" style={{ backgroundImage: "url('/media/bg-inside2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <h1 className="hero-title">Unleash Your <span className="highlight">Potential</span></h1>
           <p className="hero-subtitle">Train with the best at Serdes Fight Club under Thodoris Serdes.</p>
-          <div style={{ marginTop: '20px' }}>
+          <div className="hero-actions">
             <a href="#schedule" className="btn btn-primary">View Schedule</a>
-            <a href="https://www.instagram.com/serdesfightclub/?hl=el" target="_blank" rel="noreferrer" className="btn" style={{ marginLeft: '15px', backgroundColor: 'transparent', border: '2px solid var(--accent)', color: 'var(--accent)' }}>Book a Trial (DM)</a>
+            <a href="https://www.instagram.com/serdesfightclub/?hl=el" target="_blank" rel="noreferrer" className="btn btn-trial">Book a Trial (DM)</a>
           </div>
           <p style={{ marginTop: '15px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>*or just drop in</p>
         </div>
@@ -228,7 +228,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/mma-1.mp4" type="video/mp4" />
               </video>
-              <Icon name="fist" className="program-icon" />
+              <i className="fas fa-fist-raised fa-3x program-icon"></i>
               <h3>MMA</h3>
               <p>Train in all disciplines. Combining striking and grappling for the ultimate cage readiness.</p>
             </div>
@@ -236,7 +236,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/kick-9.mp4" type="video/mp4" />
               </video>
-              <Icon name="fire" className="program-icon" />
+              <i className="fas fa-fire fa-3x program-icon"></i>
               <h3>Kickboxing / Muay Thai</h3>
               <p>Learn to strike with power and precision. Pad work, hard sparring, and heavy bags.</p>
             </div>
@@ -244,7 +244,7 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/bjj-1.mp4" type="video/mp4" />
               </video>
-              <Icon name="ninja" className="program-icon" />
+              <i className="fas fa-user-ninja fa-3x program-icon"></i>
               <h3>Brazilian Jiu Jitsu</h3>
               <p>The art of submission. Learn sweeps, chokes, and joint locks from expert black belts. We train both <strong>Gi and No Gi</strong>.</p>
             </div>
@@ -252,13 +252,13 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/kids-1.mp4" type="video/mp4" />
               </video>
-              <Icon name="child" className="program-icon" />
+              <i className="fas fa-child fa-3x program-icon"></i>
               <h3>Kids Muay Thai</h3>
               <p>Discipline, respect, and fitness. We teach kids self-defense in a safe, structured environment.</p>
             </div>
             <div className="card program-card structured-kids-card">
               <img className="structured-kids-image" src="/bg-kids.png" alt="" aria-hidden="true" decoding="async" />
-              <Icon name="puzzle" className="program-icon" />
+              <i className="fas fa-puzzle-piece fa-3x program-icon"></i>
               <h3>Structured Kids Muay Thai</h3>
               <p>Small-group, consistent and individualized training for children with developmental or learning difficulties, supporting confidence and each child&apos;s unique strengths.</p>
             </div>
@@ -266,12 +266,12 @@ function App() {
               <video autoPlay loop muted playsInline preload="none" data-lazy-video="true" className="card-video-bg">
                 <source data-src="/videos/fitbox-1.mp4" type="video/mp4" />
               </video>
-              <Icon name="dumbbell" className="program-icon" />
+              <i className="fas fa-dumbbell fa-3x program-icon"></i>
               <h3>Fit Box</h3>
               <p>A high-cardio boxing workout. Sweat it out and get in fighting shape without the sparring.</p>
             </div>
             <div className="card program-card pilates-card" style={{ backgroundImage: "url('/bg-pilates.png')" }}>
-              <Icon name="spa" className="program-icon" />
+              <i className="fas fa-spa fa-3x program-icon"></i>
               <h3>Pilates</h3>
               <p>Build core strength, flexibility, and balance to prevent injuries and improve overall athletic performance.</p>
             </div>
