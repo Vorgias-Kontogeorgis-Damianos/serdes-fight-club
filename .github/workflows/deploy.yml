@@ -50,4 +50,5 @@ jobs:
           '
 
       - name: Verify public site
-        run: curl --fail --retry 5 --retry-delay 3 -H 'Host: serdesfightclub.gr' http://92.5.155.0/
+        run: |
+          curl --fail --retry 5 --retry-delay 3 -H 'Host: serdesfightclub.gr' http://92.5.155.0/
