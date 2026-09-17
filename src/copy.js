@@ -73,7 +73,7 @@ export const COPY = {
     nav: [['home', 'Αρχική'], ['programs', 'Προγράμματα'], ['schedule', 'Ωράριο'], ['instructors', 'Προπονητές'], ['pricing', 'Συνδρομές'], ['faq', 'Συχνές Ερωτήσεις'], ['contact', 'Επικοινωνία']],
     language: { label: 'Γλώσσα', english: 'EN', greek: 'ΕΛ' },
     hero: {
-      title: 'Απελευθέρωσε τις', accent: 'Δυνατότητές σου', subtitle: 'Προπονήσου με τους καλύτερους στο Serdes Fight Club, υπό την καθοδήγηση του Θοδωρή Σερδέ.',
+      title: 'Απελευθέρωσε τις', accent: 'Δυνατότητές σου', subtitle: 'Προπονήσου με τους καλύτερους στο Serdes Fight Club, υπό την καθοδήγηση του Θοδωρή Σερδές.',
       schedule: 'Δες το Ωράριο', trial: 'Κλείσε Δοκιμαστικό (DM)', dropIn: '*ή έλα απευθείας για προπόνηση',
     },
     programs: {

@@ -8,7 +8,7 @@ execFileSync(process.execPath, ['node_modules/vite/bin/vite.js', 'build', '--ssr
 const serverEntry = pathToFileURL(resolve('dist-ssr/entry-server.js')).href;
 const { render } = await import(serverEntry);
 const page = await readFile('dist/index.html', 'utf8');
-const rendered = page.replace('<!--ssr-outlet-->', render());
+const rendered = page.replace('<!--ssr-outlet-->', await render());
 
 if (rendered === page) throw new Error('SSR outlet was not found in dist/index.html.');
 await writeFile('dist/index.html', rendered);

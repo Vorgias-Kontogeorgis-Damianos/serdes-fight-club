@@ -8,3 +8,9 @@ hydrateRoot(document.getElementById('root'),
     <App />
   </StrictMode>,
 )
+
+addEventListener('load', () => {
+  const startMonitoring = () => import('./performance.js');
+  if ('requestIdleCallback' in window) requestIdleCallback(startMonitoring, { timeout: 3000 });
+  else setTimeout(startMonitoring, 0);
+}, { once: true });
