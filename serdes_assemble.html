@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SERDES – Assemble</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 32px;
+    }
+    h1 { color: #ffffff33; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; }
+    .stage { position: relative; width: 500px; height: 512px; }
+    .half { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .half img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+    @keyframes slideInLeft {
+      0%   { transform: translate(-30%, -30%); opacity: 0; }
+      40%  { opacity: 1; }
+      100% { transform: translate(0, 0); opacity: 1; }
+    }
+    @keyframes slideInRight {
+      0%   { transform: translate(30%, 30%); opacity: 0; }
+      40%  { opacity: 1; }
+      100% { transform: translate(0, 0); opacity: 1; }
+    }
+    .half-left  { animation: slideInLeft  0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .half-right { animation: slideInRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    button {
+      padding: 10px 28px;
+      border: 1px solid #ffffff22;
+      background: #ffffff0d;
+      color: #ffffffaa;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    button:hover { background: #ffffff22; color: #fff; }
+  </style>
+</head>
+<body>
+  <h1>assemble animation</h1>
+  <div class="stage" id="stage">
+    <div class="half half-left" id="halfLeft">
+      <img src="SERDES_LEFT.svg" alt="Left half" />
+    </div>
+    <div class="half half-right" id="halfRight">
+      <img src="SERDES_RIGHT.svg" alt="Right half" />
+    </div>
+  </div>
+  <button onclick="replay()">↺ Replay</button>
+  <script>
+    function replay() {
+      ['halfLeft','halfRight'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = '';
+      });
+    }
+  </script>
+</body>
+</html>

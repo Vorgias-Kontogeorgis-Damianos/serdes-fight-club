@@ -4,6 +4,9 @@ const glyphs = {
 };
 
 export default function Icon({ name, className = '', style }) {
+  if (name === 'kettlebell') {
+    return <svg className={`icon icon-${name} ${className}`} style={style} viewBox="0 0 64 64" aria-hidden="true" fill="currentColor"><path d="M23 19a9 9 0 1 1 18 0v3.2a22 22 0 0 1 13 20.1C54 54.3 44.2 62 32 62S10 54.3 10 42.3a22 22 0 0 1 13-20.1V19Zm6 1.1a22.9 22.9 0 0 1 6 0V19a3 3 0 1 0-6 0v1.1ZM32 26c-8.8 0-16 7.3-16 16.3C16 50.6 22.5 56 32 56s16-5.4 16-13.7C48 33.3 40.8 26 32 26Z" /></svg>;
+  }
   if (name === 'instagram') {
     return <svg className={`icon icon-${name} ${className}`} style={style} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>;
   }
