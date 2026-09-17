@@ -74,7 +74,6 @@ function VideoLoader() {
         <img className="video-loader-half video-loader-upper" src="/SERDES_LEFT.svg" alt="" />
         <img className="video-loader-half video-loader-lower" src="/SERDES_RIGHT.svg" alt="" />
       </span>
-      <span className="video-loader-wordmark">SERDES FIGHT CLUB</span>
     </span>
   );
 }
@@ -223,7 +222,7 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
           </div>
         </div>
 
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${scrollDirection === 'down' ? 'hide' : ''}`}>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${scrollDirection === 'down' ? 'hide' : ''} ${isMenuOpen ? 'menu-open' : ''}`}>
         <div className="container nav-container">
           <a className="logo nav-home-logo" href="#home" onClick={closeMenu} aria-label={language === 'el' ? 'Αρχική σελίδα' : 'Home'}>
             <span className="nav-logo-mark" aria-hidden="true">
@@ -276,7 +275,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/mma-1.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/mma-1.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="fist" className="program-icon" />
               <h3>{copy.programs.mma[0]}</h3>
               <p>{copy.programs.mma[1]}</p>
@@ -285,7 +283,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/kick-9.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/kick-9.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="fire" className="program-icon" />
               <h3>{copy.programs.kick[0]}</h3>
               <p>{copy.programs.kick[1]}</p>
@@ -294,7 +291,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/bjj-1.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/bjj-1.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="ninja" className="program-icon" />
               <h3>{copy.programs.bjj[0]}</h3>
               <p>{copy.programs.bjj[1]}</p>
@@ -303,7 +299,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/kids-1.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/kids-1.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="child" className="program-icon" />
               <h3>{copy.programs.kids[0]}</h3>
               <p>{copy.programs.kids[1]}</p>
@@ -318,7 +313,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/fitbox-1.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/fitbox-1.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="dumbbell" className="program-icon" />
               <h3>{copy.programs.fitbox[0]}</h3>
               <p>{copy.programs.fitbox[1]}</p>
@@ -333,7 +327,6 @@ function App({ BelowFoldComponent = BelowFoldSections }) {
               <video loop muted playsInline preload="none" loading="lazy" data-poster="/posters/hybrid-training.webp" className="card-video-bg" onLoadedData={handleVideoLoaded}>
                 <source data-src="/videos/hybrid-training.mp4" type="video/mp4" />
               </video>
-              <VideoLoader />
               <Icon name="kettlebell" className="program-icon" />
               <h3>{copy.programs.hybrid[0]}</h3>
               <p>{copy.programs.hybrid[1]}</p>

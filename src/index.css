@@ -191,6 +191,12 @@ h1, h2, h3, h4 {
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
+.navbar.menu-open {
+    background-color: #000;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
 @media (max-width: 768px) {
     .navbar.hide {
         transform: translateY(-100%);
@@ -586,7 +592,27 @@ h1, h2, h3, h4 {
     height: 1em;
     line-height: 1;
     vertical-align: -0.125em;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
 }
+
+.icon-menu { --icon: url('/icons/menu.svg'); }
+.icon-fist { --icon: url('/icons/fist.svg'); }
+.icon-fire { --icon: url('/icons/fire.svg'); }
+.icon-ninja { --icon: url('/icons/ninja.svg'); }
+.icon-child { --icon: url('/icons/child.svg'); }
+.icon-puzzle { --icon: url('/icons/puzzle.svg'); }
+.icon-dumbbell { --icon: url('/icons/dumbbell.svg'); }
+.icon-spa { --icon: url('/icons/spa.svg'); }
+.icon-kettlebell { --icon: url('/icons/kettlebell.svg'); }
+.icon-star { --icon: url('/icons/star.svg'); }
+.icon-check { --icon: url('/icons/check.svg'); }
+.icon-plus { --icon: url('/icons/plus.svg'); }
+.icon-map { --icon: url('/icons/map.svg'); }
+.icon-phone { --icon: url('/icons/phone.svg'); }
+.icon-instagram { --icon: url('/icons/instagram.svg'); }
+.icon-tiktok { --icon: url('/icons/tiktok.svg'); }
 
 .card .program-icon {
     color: var(--text-main);
@@ -862,11 +888,6 @@ footer {
     z-index: -2;
 }
 
-.program-card > :not(.card-video-bg, .card-image-bg, .structured-kids-image, .video-loader) {
-    position: relative;
-    z-index: 2;
-}
-
 .video-loader {
     position: absolute;
     inset: 0;
@@ -875,7 +896,6 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     background: #000;
     opacity: 1;
     visibility: visible;
@@ -913,16 +933,6 @@ footer {
 
 .video-loader-lower {
     animation: videoLoaderLower 1.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
-
-.video-loader-wordmark {
-    color: #fff;
-    font-size: 0.42rem;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0.2em;
-    padding-left: 0.2em;
-    white-space: nowrap;
 }
 
 .card-image-bg,
