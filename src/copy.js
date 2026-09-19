@@ -1,6 +1,6 @@
 export const COPY = {
   en: {
-    nav: [['home', 'Home'], ['programs', 'Programs'], ['schedule', 'Schedule'], ['instructors', 'Instructors'], ['pricing', 'Pricing'], ['faq', 'FAQ'], ['contact', 'Contact']],
+    nav: [['home', 'Home'], ['programs', 'Programs'], ['schedule', 'Schedule'], ['instructors', 'Instructors'], ['faq', 'FAQ'], ['contact', 'Contact']],
     language: { label: 'Language', english: 'EN', greek: 'ΕΛ' },
     hero: {
       title: 'Unleash Your', accent: 'Potential', subtitle: 'Train with the best at Serdes Fight Club under Thodoris Serdes.',
@@ -50,13 +50,6 @@ export const COPY = {
         '“One of the best martial-arts schools on the island. The space is excellent, both functionally and aesthetically. The atmosphere is outstanding and the classes are structured for every level.”',
       ],
     },
-    pricing: {
-      title: 'Membership', accent: 'Plans', intro: 'Choose the package that fits your goals.', month: '/mo', best: 'Best Value',
-      striking: ['Striking Base', 'Unlimited Kickboxing / Muay Thai', 'Bonus: Fit Box classes', 'Bonus: MMA classes'],
-      grappling: ['Grappling Base', 'Unlimited BJJ (Gi & No Gi)', 'Bonus: Fit Box classes', 'Bonus: MMA classes'],
-      ultimate: ['Ultimate Package', 'Unlimited access to ALL classes', 'Kickboxing & Muay Thai', 'BJJ (Gi & No Gi)', 'MMA & Fit Box', 'Pilates'],
-      kids: ['Kids Package', 'Specialized Kids Classes (5-14 yrs)', 'Safe & structured environment', 'Builds discipline & confidence'],
-    },
     faq: {
       title: 'Frequently Asked', accent: 'Questions', intro: 'Everything you need to know before your first class.',
       items: [
@@ -70,7 +63,7 @@ export const COPY = {
     footer: '© 2026 Serdes Fight Club. All rights reserved.',
   },
   el: {
-    nav: [['home', 'Αρχική'], ['programs', 'Προγράμματα'], ['schedule', 'Ωράριο'], ['instructors', 'Προπονητές'], ['pricing', 'Συνδρομές'], ['faq', 'Συχνές Ερωτήσεις'], ['contact', 'Επικοινωνία']],
+    nav: [['home', 'Αρχική'], ['programs', 'Προγράμματα'], ['schedule', 'Ωράριο'], ['instructors', 'Προπονητές'], ['faq', 'Συχνές Ερωτήσεις'], ['contact', 'Επικοινωνία']],
     language: { label: 'Γλώσσα', english: 'EN', greek: 'ΕΛ' },
     hero: {
       title: 'Απελευθέρωσε τις', accent: 'Δυνατότητές σου', subtitle: 'Προπονήσου με τους καλύτερους στο Serdes Fight Club, υπό την καθοδήγηση του Θοδωρή Σερδές.',
@@ -119,13 +112,6 @@ export const COPY = {
         '«Κατά το ταξίδι μου στην Κρήτη πέρασα έναν υπέροχο μήνα προπόνησης στο Serdes Fight Club. Οι αθλητές και οι προπονητές είναι εξαιρετικοί και πάντα μαθαίνεις κάτι, ανεξάρτητα από το επίπεδό σου.»',
         '«Από τις καλύτερες σχολές πολεμικών τεχνών στο νησί. Ο χώρος είναι άψογος λειτουργικά και αισθητικά, το κλίμα εξαιρετικό και τα μαθήματα είναι οργανωμένα για όλα τα επίπεδα.»',
       ],
-    },
-    pricing: {
-      title: 'Πακέτα', accent: 'Συνδρομών', intro: 'Επίλεξε το πακέτο που ταιριάζει στους στόχους σου.', month: '/μήνα', best: 'Καλύτερη Επιλογή',
-      striking: ['Striking Base', 'Απεριόριστο Kickboxing / Muay Thai', 'Bonus: μαθήματα Fit Box', 'Bonus: μαθήματα MMA'],
-      grappling: ['Grappling Base', 'Απεριόριστο BJJ (Gi & No Gi)', 'Bonus: μαθήματα Fit Box', 'Bonus: μαθήματα MMA'],
-      ultimate: ['Ultimate Πακέτο', 'Απεριόριστη πρόσβαση σε ΟΛΑ τα μαθήματα', 'Kickboxing & Muay Thai', 'BJJ (Gi & No Gi)', 'MMA & Fit Box', 'Pilates'],
-      kids: ['Παιδικό Πακέτο', 'Εξειδικευμένα παιδικά τμήματα (5-14 ετών)', 'Ασφαλές και οργανωμένο περιβάλλον', 'Καλλιεργεί πειθαρχία και αυτοπεποίθηση'],
     },
     faq: {
       title: 'Συχνές', accent: 'Ερωτήσεις', intro: 'Όλα όσα χρειάζεται να γνωρίζεις πριν από το πρώτο σου μάθημα.',

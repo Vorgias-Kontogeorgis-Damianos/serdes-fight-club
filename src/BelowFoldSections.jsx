@@ -74,43 +74,6 @@ export default function BelowFoldSections({ copy }) {
         </div>
       </section>
 
-      <section id="pricing" className="pricing section-padding">
-        <div className="container">
-          <div className="section-title">
-            <h2>{copy.pricing.title} <span className="highlight">{copy.pricing.accent}</span></h2>
-            <p>{copy.pricing.intro}</p>
-          </div>
-          <div className="grid pricing-grid" role="region" aria-label={copy.pricing.title}>
-            {[['striking', 45], ['grappling', 45]].map(([plan, price]) => (
-              <div className="card pricing-card" key={plan}>
-                <h3>{copy.pricing[plan][0]}</h3>
-                <div className="price">€{price}<span>{copy.pricing.month}</span></div>
-                <ul className="pricing-features">
-                  <li><Icon name="check" /> {copy.pricing[plan][1]}</li>
-                  <li><Icon name="plus" className="highlight" /> {copy.pricing[plan][2]}</li>
-                  <li><Icon name="plus" className="highlight" /> {copy.pricing[plan][3]}</li>
-                </ul>
-              </div>
-            ))}
-            <div className="card pricing-card featured">
-              <div className="featured-badge">{copy.pricing.best}</div>
-              <h3>{copy.pricing.ultimate[0]}</h3>
-              <div className="price">€60<span>{copy.pricing.month}</span></div>
-              <ul className="pricing-features">
-                {copy.pricing.ultimate.slice(1).map((feature) => <li key={feature}><Icon name="check" /> {feature}</li>)}
-              </ul>
-            </div>
-            <div className="card pricing-card">
-              <h3>{copy.pricing.kids[0]}</h3>
-              <div className="price">€40<span>{copy.pricing.month}</span></div>
-              <ul className="pricing-features">
-                {copy.pricing.kids.slice(1).map((feature) => <li key={feature}><Icon name="check" /> {feature}</li>)}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="faq" className="faq section-padding bg-dark">
         <div className="container">
           <div className="section-title">

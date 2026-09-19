@@ -260,16 +260,6 @@ h1, h2, h3, h4 {
     letter-spacing: 1px;
 }
 
-.logo-sf {
-    font-size: 2.5rem;
-    line-height: 1;
-}
-
-.logo-text {
-    font-size: 0.8rem;
-    line-height: 1.1;
-}
-
 .nav-links {
     display: flex;
     gap: 30px;
@@ -607,8 +597,6 @@ h1, h2, h3, h4 {
 .icon-spa { --icon: url('/icons/spa.svg'); }
 .icon-kettlebell { --icon: url('/icons/kettlebell.svg'); }
 .icon-star { --icon: url('/icons/star.svg'); }
-.icon-check { --icon: url('/icons/check.svg'); }
-.icon-plus { --icon: url('/icons/plus.svg'); }
 .icon-map { --icon: url('/icons/map.svg'); }
 .icon-phone { --icon: url('/icons/phone.svg'); }
 .icon-instagram { --icon: url('/icons/instagram.svg'); }
@@ -627,68 +615,6 @@ h1, h2, h3, h4 {
 
 .card p {
     color: var(--text-muted);
-}
-
-/* Pricing Section */
-.pricing-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.pricing-card {
-    text-align: left;
-    position: relative;
-}
-
-.pricing-card.featured {
-    border: 2px solid var(--accent);
-    transform: scale(1.05);
-}
-
-.pricing-card.featured:hover {
-    transform: scale(1.05) translateY(-10px);
-}
-
-.featured-badge {
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    background: var(--accent);
-    color: #fff;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.price {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 20px 0;
-    color: var(--text-main);
-}
-
-.price span {
-    font-size: 1rem;
-    color: var(--text-muted);
-    font-weight: 400;
-}
-
-.pricing-features {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.pricing-features li {
-    margin-bottom: 15px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-.pricing-features .icon {
-    margin-right: 10px;
-    color: var(--accent);
-    font-size: 0.9rem;
 }
 
 /* FAQ Section */
@@ -1361,8 +1287,7 @@ footer {
         scroll-snap-stop: always;
     }
 
-    .sub-instructors-grid,
-    .pricing-grid {
+    .sub-instructors-grid {
         display: flex;
         grid-template-columns: none !important;
         gap: 16px !important;
@@ -1377,22 +1302,15 @@ footer {
         padding: 8px 2px 18px;
     }
 
-    .sub-instructors-grid::-webkit-scrollbar,
-    .pricing-grid::-webkit-scrollbar {
+    .sub-instructors-grid::-webkit-scrollbar {
         display: none;
     }
 
-    .sub-instructors-grid .instructor-card,
-    .pricing-grid .pricing-card {
+    .sub-instructors-grid .instructor-card {
         flex: 0 0 min(82vw, 330px);
         width: min(82vw, 330px);
         scroll-snap-align: center;
         scroll-snap-stop: always;
-    }
-
-    .pricing-grid .pricing-card.featured,
-    .pricing-grid .pricing-card.featured:hover {
-        transform: none;
     }
 
     .contact-grid {
